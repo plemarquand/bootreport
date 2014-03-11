@@ -127,7 +127,7 @@ board.on("ready", function() {
     var weatherEndDate = moment().hour(11).minute(0).second(0);
 
     var tvStartDate = moment().hour(16).minute(0).second(0);
-    var tvEndDate = moment().hour(19).minute(30).second(0);
+    var tvEndDate = moment().hour(22).minute(30).second(0);
 
     var currentValue = -1;
 
@@ -137,26 +137,26 @@ board.on("ready", function() {
         }
 
         currentValue = value;
-        console.log("SETTLED ON", value);
         var now = moment();
-        if (value === 0 && now.isAfter(weatherStartDate) && now.isBefore(weatherEndDate)) {
+        if (value === 1 && now.isAfter(weatherStartDate) && now.isBefore(weatherEndDate)) {
             var currenttime = new Date().getTime();
             if (currenttime - lastrun > minInterval) {
                 lastrun = currenttime;
                 weatherReport();
             }
-        } else if (value === 1 && now.isAfter(tvStartDate) && now.isBefore(tvEndDate)) {
+        } else if (value === 0 && now.isAfter(tvStartDate) && now.isBefore(tvEndDate)) {
             var currenttime = new Date().getTime();
             if (currenttime - lastrun > minInterval) {
                 lastrun = currenttime;
                 tvReport();
             }
+        } else {
+            console.log("Event triggered outside a valid time".yellow);
         }
-    }
+    };
 
     var settleDuration = 500;
     var timeout = -1;
-    var activeValue = -1;
     this.digitalRead(PROXIMITY_SENSOR_PIN, function(value) {
         clearTimeout(timeout);
         timeout = setTimeout(settled, settleDuration, value);
