@@ -1,4 +1,4 @@
 bootreport
 ==========
 
-Get spoken reports when you leave and arrive the house.
+Get spoken reports when you leave and arrive the home.
